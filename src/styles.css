@@ -1,0 +1,18 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+button {
+  margin: 2px;
+}
+
+.box-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+.card {
+  border: 2px solid black;
+  margin: 2px;
+  padding: 2px;
+  text-align: left;
+}
