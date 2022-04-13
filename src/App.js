@@ -1,20 +1,41 @@
 import React, { useState, useEffect } from "react";
 import "./styles.css";
-import patients from "./api.js";
+import {getPatients} from './api'
 
 
 
 export default function App() {
-  const mapTest = patients.patients.map((item, idx) => {
+  // const mapTest = patients.patients.map((item, idx) => {
+  //   var d = new Date(item.birthdate);
+  //   let timeStampCon = d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear();
+  //   return { ...item, birthdate: timeStampCon };
+  // });
+
+  const [data, setData] = useState([]);
+  console.log(data,'data');
+  const [searchText,setSearchText] = useState("")
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('firstName');
+  const [isLoading, setIsLoading] = useState(true);
+
+  console.log(orderBy,'orderBY');
+
+useEffect(() => {
+getPatients()
+.then(data => {
+ const mapTest = data.patients.map((item, idx) => {
     var d = new Date(item.birthdate);
     let timeStampCon = d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear();
     return { ...item, birthdate: timeStampCon };
   });
+  
+  setData(mapTest)
+})
+  
+.catch(e =>console.log(e,'error'))
 
-  const [data, setData] = useState(mapTest);
-  const [searchText,setSearchText] = useState("")
-  const [order, setOrder] = useState('');
-  const [orderBy, setOrderBy] = useState('firstName');
+},[])
+
 
 //Single source of truth
   function descendingComparator(a, b, orderBy) {
@@ -75,6 +96,8 @@ export default function App() {
     </div>
   ));
 
+  
+
   return (
     <div className="App">
       <h1>Hello World</h1>
@@ -101,7 +124,8 @@ export default function App() {
           setOrder(getOrder("firstName"))
           }}
         >
-         {`First Name -Sorted ${order}` }
+        First name {``}
+      {orderBy === 'firstName'? `Sorted by ${order}`:null}
         </button>
         <button
           value="lastName"
@@ -113,6 +137,7 @@ export default function App() {
             }}
         >
           Last Name
+        {orderBy === 'lastName'? `Sorted by ${order}`:null}
         </button>
         <button
           value="sex"

@@ -138,12 +138,11 @@ const patients = {
   ]
 };
 
-export default patients;
 
-// export const getPatients = () => {
-//   return new Promise((resolve) =>
-//     setTimeout(() => {
-//       resolve(patients);
-//     }, 2000)
-//   );
-// };
+export const getPatients = () => {
+  return new Promise((resolve,reject) =>
+    setTimeout(() => {
+      resolve(patients);
+    }, 2000)
+  );
+};
